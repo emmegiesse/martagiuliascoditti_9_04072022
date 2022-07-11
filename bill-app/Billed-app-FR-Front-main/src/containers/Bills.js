@@ -23,8 +23,15 @@ export default class {
   handleClickIconEye = (icon) => {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
-    $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
-    $('#modaleFile').modal('show')
+    let ext = billUrl.substr(billUrl.lastIndexOf(".") + 1, billUrl.length).toLowerCase()
+    let allExtensions = ["jpg","jpeg","png"]
+    if (allExtensions.includes(ext)){
+      $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
+      $('#modaleFile').modal('show')
+    } else {
+      $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container">fichier corrompu</div>`)
+      $('#modaleFile').modal('show')
+    }
   }
 
   getBills = () => {
@@ -33,8 +40,7 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {
-        const bills = snapshot
-        .map(doc => {
+        const bills = snapshot.map(doc => {
             try {
               return {
                 ...doc,

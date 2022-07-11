@@ -25,7 +25,14 @@ export default class NewBill {
     formData.append('file', file)
     formData.append('email', email)
 
-    this.store
+    let ext = fileName.substr(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase()
+    let allExtensions = ["jpg","jpeg","png"]
+    const button = document.getElementById ("btn-send-bill")
+
+    if (allExtensions.includes(ext)){
+    billFormatError.syle.cssText="display:none";
+    button.disabled=false;
+      this.store
       .bills()
       .create({
         data: formData,
@@ -39,7 +46,11 @@ export default class NewBill {
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
+  } else {
+    button.disabled=true
   }
+}
+
   handleSubmit = e => {
     e.preventDefault()
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)

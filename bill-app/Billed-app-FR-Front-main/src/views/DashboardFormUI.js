@@ -64,7 +64,7 @@ export default (bill) => {
           </div>
         </div>
       </div>
-      <div class="row">
+      ${bill.fileName!="null" ? `<div class="row">
         <div class="col-sm">
           <label for="file" class="bold-label">Justificatif</label>
             <div class='input-field input-flex file-flex'>
@@ -74,7 +74,7 @@ export default (bill) => {
             </div>
           </div>
         </div>
-      </div>
+      </div>`:``}
       <div class="row">
        ${bill.status === 'pending' ? (`
         <div class="col-sm">
