@@ -6,17 +6,17 @@ export default class {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
     this.onNavigate = onNavigate
-    this.store = store
+    this.store = store 
     const buttonNewBill = document.querySelector(`button[data-testid="btn-new-bill"]`)
     if (buttonNewBill) buttonNewBill.addEventListener('click', this.handleClickNewBill)
     const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`)
     if (iconEye) iconEye.forEach(icon => {
-      icon.addEventListener('click', () => this.handleClickIconEye(icon))
+      icon.addEventListener('click', (e) => this.handleClickIconEye(icon))
     })
     new Logout({ document, localStorage, onNavigate })
   }
 
-  handleClickNewBill = () => {
+  handleClickNewBill = (e) => {
     this.onNavigate(ROUTES_PATH['NewBill'])
   }
 
@@ -34,11 +34,11 @@ export default class {
       .list()
       .then(snapshot => {
         const bills = snapshot
-          .map(doc => {
+        .map(doc => {
             try {
               return {
                 ...doc,
-                date: doc.date,
+                date: /*formatDate(doc.date),*/ doc.date,
                 status: formatStatus(doc.status)
               }
             } catch(e) {
