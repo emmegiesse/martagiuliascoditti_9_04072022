@@ -27,10 +27,11 @@ export default class NewBill {
 
     let ext = fileName.substr(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase()
     let allExtensions = ["jpg","jpeg","png"]
+    let fileFormatError = document.getElementById("formatAlert")
+    fileFormatError.style.display="none";
     const button = document.getElementById ("btn-send-bill")
-
+    
     if (allExtensions.includes(ext)){
-    billFormatError.syle.cssText="display:none";
     button.disabled=false;
       this.store
       .bills()
@@ -47,7 +48,8 @@ export default class NewBill {
         this.fileName = fileName
       }).catch(error => console.error(error))
   } else {
-    button.disabled=true
+    fileFormatError.style.display="block";
+    button.disabled=true;
   }
 }
 
