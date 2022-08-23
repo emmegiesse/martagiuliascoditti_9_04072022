@@ -20,7 +20,7 @@ const onNavigate = (pathname) => {
 
 describe("Given I am connected as an employee", () => {
   beforeEach(() => {
-    window.localStorage.setItem("user",JSON.stringify({type: "Employee",})); // localstorage - employé
+    window.localStorage.setItem("user",JSON.stringify({type: "Employee",})); 
     Object.defineProperty(window, "location", {
       alue: {hash: ROUTES_PATH["NewBill"],},
     });
@@ -39,19 +39,19 @@ describe("Given I am connected as an employee", () => {
     describe("And I upload a image file image (jpg, jpeg or png)", () => {
       test("Then file extension is correct", () => {
         document.body.innerHTML = NewBillUI()
-        const newBill = new NewBill({ // instance de la classe NewBill
+        const newBill = new NewBill({ 
           document, onNavigate, store: null, localStorage: window.localStorage
         })
-        const handleChangeFile = jest.fn(() => newBill.handleChangeFile) // upload file
+        const handleChangeFile = jest.fn(() => newBill.handleChangeFile) 
         const inputFile = screen.queryByTestId("file")
         inputFile.addEventListener("change", handleChangeFile)
-        fireEvent.change(inputFile, { // event
+        fireEvent.change(inputFile, { 
           target: {
             files: [new File(["test.jpg"], "test.jpg", { type: "image/jpg" })],
           }
         })
-        expect(handleChangeFile).toBeCalled(); // appel de la fonction handleChangeFile
-        expect(inputFile.files[0].name).toBe('test.jpg'); // le nom du fichier devrait être test.jpg
+        expect(handleChangeFile).toBeCalled(); 
+        expect(inputFile.files[0].name).toBe('test.jpg'); 
         const error = screen.queryByTestId('errorMessage')
         expect(error).toBeFalsy
       })
@@ -73,7 +73,7 @@ describe("Given I am connected as an employee", () => {
           fileName: "test",
           fileUrl: "test.jpg"
         }
-        const handleSubmit = jest.fn((e) => newBill.handleSubmit(e)) // simulation de handleSubmit
+        const handleSubmit = jest.fn((e) => newBill.handleSubmit(e)) 
         newBill.createBill = (newBill) => newBill
         document.querySelector(`input[data-testid="expense-name"]`).value = billTest.name
         document.querySelector(`input[data-testid="datepicker"]`).value = billTest.date
@@ -93,19 +93,19 @@ describe("Given I am connected as an employee", () => {
     describe("And I upload a image file image other then (jpg, jpeg or png)", () => {
       test("Then file extension is non correct", () => {
         document.body.innerHTML = NewBillUI()
-        const newBill = new NewBill({ // instance de la classe NewBill
+        const newBill = new NewBill({ 
           document, onNavigate, store: null, localStorage: window.localStorage
         })
-        const handleChangeFile = jest.fn(() => newBill.handleChangeFile) // upload file
+        const handleChangeFile = jest.fn(() => newBill.handleChangeFile) 
         const inputFile = screen.queryByTestId("file")
         inputFile.addEventListener("change", handleChangeFile)
-        fireEvent.change(inputFile, { // event
+        fireEvent.change(inputFile, { 
           target: {
             files: [new File(["test.pdf"], "test.pdf", { type: "image/pdf" })],
           }
         })
-        expect(handleChangeFile).toBeCalled(); // appel de la fonction handleChangeFile
-        expect(inputFile.files[0].name).toBe('test.pdf'); // le nom du fichier devrait être test.jpg
+        expect(handleChangeFile).toBeCalled(); 
+        expect(inputFile.files[0].name).toBe('test.pdf'); 
         const error = screen.queryByTestId('errorMessage')
         expect(error).toBeFalsy
       })
@@ -119,30 +119,20 @@ describe("Given I am connected as an employee", () => {
 describe ("Given I am a user connected as Employee", () => {
   describe("When I navigate to NewBills", () => {
     test("post new bills from mock API POST", async () => { 
-      /*localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "a@a" }));
-      const root = document.createElement("div")
-      root.setAttribute("id", "root")
-      document.body.append(root)
-      router()*/
-      //window.onNavigate(ROUTES_PATH.NewBill)
+
       const postSpy = jest.spyOn(mockStore, "bills");
       const isBills = mockStore.bills();
       const bills = await isBills.update(); 
       document.body.innerHTML = NewBillUI();
       const bill = new NewBill ({document, onNavigate, store:mockStore, bills:bills, localStorage:localStorageMock});
-      expect(postSpy).toHaveBeenCalledTimes(1); // appel de postSpy au moins une fois
+      expect(postSpy).toHaveBeenCalledTimes(1); 
       expect(bills).toBeDefined()
     })
     
     describe("When an error occurs on API", () => {
       beforeEach(() => {
         jest.spyOn(mockStore, "bills")
-        //Object.defineProperty(window,'localStorage',{ value: localStorageMock })
-        /*window.localStorage.setItem('user', JSON.stringify({type: 'Employee',email: "a@a"}))
-        const root = document.createElement("div")
-        root.setAttribute("id", "root")
-        document.body.appendChild(root)
-        router()*/
+
       })
       test("fetches bills from an API and fails with 404 message error", async () => {
         mockStore.bills.mockImplementationOnce(() => {

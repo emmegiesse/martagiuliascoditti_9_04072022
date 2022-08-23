@@ -38,26 +38,26 @@ describe("Given I am connected as an employee", () => {
     })
   })
   
-  describe("When I click on the new bill button", () => { // handleClickNewBill for container/Bills.js
+  describe("When I click on the new bill button", () => { 
     test("It should open a new bill page", () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-      document.body.innerHTML = BillsUI({data : bills}) // build user interface
+      document.body.innerHTML = BillsUI({data : bills}) 
       const bill = new Bills({
         document, onNavigate, store: null, bills, localStorage: window.localStorage
       });
-      $.fn.modal = jest.fn() // mock le comportement 
-      const handleClickNewBill = jest.fn((e) => bill.handleClickNewBill(e)); // Mock handleClickNewBill
-      const newBill = screen.getByTestId('btn-new-bill'); // get dans le DOM
-      newBill.addEventListener("click", handleClickNewBill); // Evenement
+      $.fn.modal = jest.fn()  
+      const handleClickNewBill = jest.fn((e) => bill.handleClickNewBill(e)); 
+      const newBill = screen.getByTestId('btn-new-bill'); 
+      newBill.addEventListener("click", handleClickNewBill); 
       fireEvent.click(newBill);
       expect(handleClickNewBill).toHaveBeenCalled();
-      expect(screen.getAllByText('Envoyer une note de frais')).toBeTruthy() // Affichage du message "envoyer une note de frais"
+      expect(screen.getAllByText('Envoyer une note de frais')).toBeTruthy() 
     });
   })
   
-  describe('When I click on the icon eye to show details of bill', () => { // handleClickIconEye for container/Bills.js
+  describe('When I click on the icon eye to show details of bill', () => { 
     test('A modal should open', () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
@@ -67,15 +67,15 @@ describe("Given I am connected as an employee", () => {
         type: 'Employee'
       }))
       bills[0].fileUrl = "test.jpg";
-      document.body.innerHTML = BillsUI({data: bills}); // build user interface
+      document.body.innerHTML = BillsUI({data: bills}); 
       const eyeBill = new Bills({
         document, onNavigate, store: null, bills, localStorage: window.localStorage
       });
-      $.fn.modal = jest.fn() // mock le comportement 
-      let eye = screen.getAllByTestId('icon-eye'); //get buton eye dans le DOM
+      $.fn.modal = jest.fn()  
+      let eye = screen.getAllByTestId('icon-eye'); 
       console.log (eye)
-      const handleClickIconEye = jest.fn((e) => eyeBill.handleClickIconEye(eye[0])); //mock la function handleClickIconEye
-      eye[0].addEventListener('click', handleClickIconEye); //event 
+      const handleClickIconEye = jest.fn((e) => eyeBill.handleClickIconEye(eye[0])); 
+      eye[0].addEventListener('click', handleClickIconEye);  
       fireEvent.click(eye[0]); 
       expect(handleClickIconEye).toHaveBeenCalled();
       const modale = document.getElementById('modaleFile');
@@ -92,15 +92,15 @@ describe("Given I am connected as an employee", () => {
         type: 'Employee'
       }))
       bills[0].fileUrl = "test.docx";
-      document.body.innerHTML = BillsUI({data: bills}); // build user interface
+      document.body.innerHTML = BillsUI({data: bills}); 
       const eyeBill = new Bills({
         document, onNavigate, store: null, bills, localStorage: window.localStorage
       });
-      $.fn.modal = jest.fn() // mock le comportement 
-      let eye = screen.getAllByTestId('icon-eye'); //get buton eye dans le DOM
+      $.fn.modal = jest.fn()  
+      let eye = screen.getAllByTestId('icon-eye'); 
       console.log (eye)
-      const handleClickIconEye = jest.fn((e) => eyeBill.handleClickIconEye(eye[0])); //mock la function handleClickIconEye
-      eye[0].addEventListener('click', handleClickIconEye); //event 
+      const handleClickIconEye = jest.fn((e) => eyeBill.handleClickIconEye(eye[0])); 
+      eye[0].addEventListener('click', handleClickIconEye);  
       fireEvent.click(eye[0]); 
       expect(handleClickIconEye).toHaveBeenCalled();
       const modale = document.getElementById('modaleFile');
@@ -125,12 +125,12 @@ describe ("Given I am a user connected as Employee", () => {
       window.onNavigate(ROUTES_PATH.Bills)
       const getSpy = jest.spyOn(mockStore, "bills");
       const isBills = mockStore.bills ();
-      const bills = await isBills.list(); // get bills et new bills
+      const bills = await isBills.list(); 
       document.body.innerHTML = BillsUI({data:bills});
       const bill = new Bills ({document, onNavigate, store:mockStore, bills:bills, localStorage:window.localStorage});
-      expect(getSpy).toHaveBeenCalledTimes(1); // appel de getSpy au moins une fois
+      expect(getSpy).toHaveBeenCalledTimes(1); 
       expect(bills).toBeDefined()
-      expect(bills.length).toBe(4); // nombre de bills
+      expect(bills.length).toBe(4); 
     })
     
     describe("When an error occurs on API", () => {
